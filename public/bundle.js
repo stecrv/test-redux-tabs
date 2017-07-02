@@ -6788,7 +6788,7 @@ function getTabs() {
     };
 }
 // POST A TAB
-function postTabs(book) {
+function postTabs(tab) {
     return {
         type: "POST_TAB",
         payload: tab
@@ -6802,10 +6802,10 @@ function deleteTabs(id) {
     };
 }
 // UPDATE A TAB
-function updateTabs(book) {
+function updateTabs(tabs, tab) {
     return {
         type: "UPDATE_TAB",
-        payload: tab
+        payload: { tabs: tabs, tab: tab }
     };
 }
 
@@ -11307,7 +11307,7 @@ var _index2 = _interopRequireDefault(_index);
 
 var _tabsActions = __webpack_require__(56);
 
-var _tabsList = __webpack_require__(228);
+var _tabsList = __webpack_require__(229);
 
 var _tabsList2 = _interopRequireDefault(_tabsList);
 
@@ -24788,7 +24788,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _redux = __webpack_require__(25);
 
-var _tabsReducers = __webpack_require__(230);
+var _tabsReducers = __webpack_require__(228);
 
 exports.default = (0, _redux.combineReducers)({
     tabs: _tabsReducers.tabsReducers
@@ -24796,185 +24796,6 @@ exports.default = (0, _redux.combineReducers)({
 
 /***/ }),
 /* 228 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(20);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRedux = __webpack_require__(52);
-
-var _redux = __webpack_require__(25);
-
-var _tabsActions = __webpack_require__(56);
-
-var _tabItem = __webpack_require__(229);
-
-var _tabItem2 = _interopRequireDefault(_tabItem);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var TabsLists = function (_React$Component) {
-    _inherits(TabsLists, _React$Component);
-
-    function TabsLists() {
-        _classCallCheck(this, TabsLists);
-
-        return _possibleConstructorReturn(this, (TabsLists.__proto__ || Object.getPrototypeOf(TabsLists)).apply(this, arguments));
-    }
-
-    _createClass(TabsLists, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            this.props.getTabs();
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            console.log('accessing to state', this.props.tabs);
-            var tabsList = this.props.tabs.map(function (tabsArr) {
-                return _react2.default.createElement(_tabItem2.default, { key: tabsArr.id,
-                    id: tabsArr.id,
-                    name: tabsArr.name,
-                    points: tabsArr.points
-                });
-            });
-            return _react2.default.createElement(
-                'div',
-                null,
-                _react2.default.createElement(
-                    'section',
-                    { id: 'tabs' },
-                    tabsList
-                )
-            );
-        }
-    }]);
-
-    return TabsLists;
-}(_react2.default.Component);
-
-function mapStateToProps(state) {
-    return {
-        tabs: state.tabs.tabs
-    };
-}
-function mapDispatchToProps(dispatch) {
-    return (0, _redux.bindActionCreators)({
-        getTabs: _tabsActions.getTabs // other actions
-    }, dispatch);
-}
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(TabsLists);
-
-/***/ }),
-/* 229 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(20);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRedux = __webpack_require__(52);
-
-var _redux = __webpack_require__(25);
-
-var _tabsActions = __webpack_require__(56);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var TabItem = function (_React$Component) {
-    _inherits(TabItem, _React$Component);
-
-    function TabItem() {
-        _classCallCheck(this, TabItem);
-
-        return _possibleConstructorReturn(this, (TabItem.__proto__ || Object.getPrototypeOf(TabItem)).apply(this, arguments));
-    }
-
-    _createClass(TabItem, [{
-        key: 'handleTab',
-        value: function handleTab() {
-
-            var tab = [].concat(_toConsumableArray(this.props.tabs), [{
-                id: this.props.id,
-                name: this.props.name,
-                points: this.props.points
-            }]);
-
-            var id = this.props.tabs.findIndex(function (tab) {
-                return tab.id === id;
-            });
-            this.props.updateTabs(id, tab);
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                'div',
-                { className: 'item', key: this.props.id },
-                _react2.default.createElement(
-                    'h6',
-                    null,
-                    this.props.name
-                ),
-                _react2.default.createElement(
-                    'p',
-                    null,
-                    this.props.points
-                )
-            );
-        }
-    }]);
-
-    return TabItem;
-}(_react2.default.Component);
-
-function mapStateToProps(state) {
-    return {
-        tabs: state.tabs.tabs
-    };
-}
-
-function mapDispatchToProps(dispatch) {
-    return (0, _redux.bindActionCreators)({ updateTabs: _tabsActions.updateTabs }, dispatch);
-}
-
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(TabItem);
-
-/***/ }),
-/* 230 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25034,10 +24855,10 @@ function tabsReducers() {
             var currentTabToUpdate = [].concat(_toConsumableArray(state.tabs));
 
             var indexToUpdate = currentTabToUpdate.findIndex(function (tab) {
-                return tab.id === action.payload.id;
+                return tab.id === action.payload.tab.id;
             });
 
-            var newTabToUpdate = _extends({}, currentTabToUpdate[indexToUpdate], { title: action.payload.title });
+            var newTabToUpdate = _extends({}, currentTabToUpdate[indexToUpdate], { name: action.payload.tab.name });
 
             console.log("tab to update", newTabToUpdate);
 
@@ -25046,6 +24867,283 @@ function tabsReducers() {
     }
     return state;
 };
+
+/***/ }),
+/* 229 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(20);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(52);
+
+var _redux = __webpack_require__(25);
+
+var _tabsActions = __webpack_require__(56);
+
+var _tabItem = __webpack_require__(230);
+
+var _tabItem2 = _interopRequireDefault(_tabItem);
+
+var _tabSelector = __webpack_require__(232);
+
+var _tabSelector2 = _interopRequireDefault(_tabSelector);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var TabsLists = function (_React$Component) {
+    _inherits(TabsLists, _React$Component);
+
+    function TabsLists() {
+        _classCallCheck(this, TabsLists);
+
+        return _possibleConstructorReturn(this, (TabsLists.__proto__ || Object.getPrototypeOf(TabsLists)).apply(this, arguments));
+    }
+
+    _createClass(TabsLists, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this.props.getTabs();
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            console.log('accessing to state', this.props.tabs);
+            var tabsSelector = this.props.tabs.map(function (tabsArr) {
+                return _react2.default.createElement(_tabSelector2.default, { key: tabsArr.id,
+                    id: tabsArr.id,
+                    name: tabsArr.name
+                });
+            });
+            var tabsList = this.props.tabs.map(function (tabsArr) {
+                return _react2.default.createElement(_tabItem2.default, { key: tabsArr.id,
+                    id: tabsArr.id,
+                    name: tabsArr.name,
+                    points: tabsArr.points
+                });
+            });
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    'section',
+                    { id: 'tabs' },
+                    _react2.default.createElement(
+                        'div',
+                        { id: 'selectors' },
+                        tabsSelector
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { id: 'items' },
+                        tabsList
+                    )
+                )
+            );
+        }
+    }]);
+
+    return TabsLists;
+}(_react2.default.Component);
+
+function mapStateToProps(state) {
+    return {
+        tabs: state.tabs.tabs
+    };
+}
+function mapDispatchToProps(dispatch) {
+    return (0, _redux.bindActionCreators)({
+        getTabs: _tabsActions.getTabs // other actions
+    }, dispatch);
+}
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(TabsLists);
+
+/***/ }),
+/* 230 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(20);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(52);
+
+var _redux = __webpack_require__(25);
+
+var _reactDom = __webpack_require__(113);
+
+var _tabsActions = __webpack_require__(56);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var TabItem = function (_React$Component) {
+    _inherits(TabItem, _React$Component);
+
+    function TabItem() {
+        _classCallCheck(this, TabItem);
+
+        return _possibleConstructorReturn(this, (TabItem.__proto__ || Object.getPrototypeOf(TabItem)).apply(this, arguments));
+    }
+
+    _createClass(TabItem, [{
+        key: 'handleTab',
+        value: function handleTab(el) {
+            el.name = (0, _reactDom.findDOMNode)(this.refs['name_' + this.props.id]).value;
+            this.props.updateTabs(this.props.tabs, el);
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                { className: 'item', key: this.props.id },
+                _react2.default.createElement(
+                    'span',
+                    { className: 'name' },
+                    _react2.default.createElement('input', { ref: 'name_' + this.props.id, value: this.props.name, onChange: this.handleTab.bind(this, { id: this.props.id, points: this.props.points }) })
+                ),
+                _react2.default.createElement('br', null),
+                _react2.default.createElement(
+                    'span',
+                    { className: 'points' },
+                    this.props.points
+                )
+            );
+        }
+    }]);
+
+    return TabItem;
+}(_react2.default.Component);
+
+function mapStateToProps(state) {
+    return {
+        tabs: state.tabs.tabs
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return (0, _redux.bindActionCreators)({ updateTabs: _tabsActions.updateTabs }, dispatch);
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(TabItem);
+
+/***/ }),
+/* 231 */,
+/* 232 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(20);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(52);
+
+var _redux = __webpack_require__(25);
+
+var _tabsActions = __webpack_require__(56);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var TabSelector = function (_React$Component) {
+    _inherits(TabSelector, _React$Component);
+
+    function TabSelector() {
+        _classCallCheck(this, TabSelector);
+
+        return _possibleConstructorReturn(this, (TabSelector.__proto__ || Object.getPrototypeOf(TabSelector)).apply(this, arguments));
+    }
+
+    _createClass(TabSelector, [{
+        key: 'handleSelector',
+        value: function handleSelector() {
+
+            var tab = [].concat(_toConsumableArray(this.props.tabs), [{
+                id: this.props.id,
+                name: this.props.name
+            }]);
+
+            var id = this.props.tabs.findIndex(function (tab) {
+                return tab.id === id;
+            });
+            this.props.updateTabs(id, tab);
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'span',
+                { className: 'selector', key: this.props.id, onClick: this.handleSelector },
+                _react2.default.createElement(
+                    'span',
+                    { className: 'name' },
+                    this.props.name
+                )
+            );
+        }
+    }]);
+
+    return TabSelector;
+}(_react2.default.Component);
+
+function mapStateToProps(state) {
+    return {
+        tabs: state.tabs.tabs
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return (0, _redux.bindActionCreators)({ updateTabs: _tabsActions.updateTabs }, dispatch);
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(TabSelector);
 
 /***/ })
 /******/ ]);

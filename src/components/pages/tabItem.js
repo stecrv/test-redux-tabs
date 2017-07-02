@@ -2,31 +2,22 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import {findDOMNode} from 'react-dom';
 import {postTabs, updateTabs} from '../../actions/tabsActions'
 
 
 class TabItem extends React.Component {
 
-    handleTab() {
-
-        const tab = [...this.props.tabs, {
-            id: this.props.id,
-            name: this.props.name,
-            points: this.props.points
-        }];
-
-        let id =  this.props.tabs.findIndex((function(tab){
-            return tab.id === id;
-        }));
-        this.props.updateTabs(id, tab);
-
+    handleTab(el) {
+        el.name = findDOMNode(this.refs['name_'+this.props.id]).value;
+        this.props.updateTabs(this.props.tabs, el );
     }
 
     render() {
         return (
             <div className="item" key={this.props.id}>
-                <h6>{this.props.name}</h6>
-                <p>{this.props.points}</p>
+                <span className="name" ><input ref={'name_'+this.props.id} value={this.props.name}  onChange={this.handleTab.bind(this, {id: this.props.id, points: this.props.points}) }/></span><br/>
+                <span className="points">{this.props.points}</span>
             </div>
         )
     }

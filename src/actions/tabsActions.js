@@ -6,7 +6,7 @@ export function getTabs(){
     }
 }
 // POST A TAB
-export function postTabs(book){
+export function postTabs(tab){
     return {
         type:"POST_TAB",
         payload: tab
@@ -20,9 +20,9 @@ export function deleteTabs(id){
     }
 }
 // UPDATE A TAB
-export function updateTabs(book){
+export function updateTabs(tabs, tab){
     return {
         type:"UPDATE_TAB",
-        payload: tab
+        payload: {tabs:tabs,tab:tab}
     }
 }

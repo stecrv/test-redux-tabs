@@ -49,10 +49,10 @@ export function tabsReducers(state = {
 
             const indexToUpdate = currentTabToUpdate.findIndex(
                 function (tab) {
-                    return tab.id === action.payload.id;
+                    return tab.id === action.payload.tab.id;
                 })
 
-            const newTabToUpdate = {...currentTabToUpdate[indexToUpdate], title: action.payload.title}
+            const newTabToUpdate = {...currentTabToUpdate[indexToUpdate], name: action.payload.tab.name}
 
             console.log("tab to update", newTabToUpdate);
 
