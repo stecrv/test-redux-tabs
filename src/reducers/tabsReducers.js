@@ -22,11 +22,13 @@ export function tabsReducers(state = {
             name: 'Boba Fett',
             points: '872',
         }
-    ]
+    ],
+    selected:0,
+    size: 'wide'
 }, action) {
     switch (action.type) {
         case "GET_TABS":
-            return {...state, tabs: [...state.tabs]}
+            return {...state, tabs: [...state.tabs], selected:state.selected,size:state.size}
             break;
         case "POST_TAB":
             let tabs = state.tabs.concat(action.payload)
@@ -43,6 +45,9 @@ export function tabsReducers(state = {
 
             return {tabs: [...currentTabToDelete.slice(0, indexToDelete), ...currentTabToDelete.slice(indexToDelete + 1)]}
             break;
+        case "UPDATE_SELECTED":
+            return {tabs: state.tabs, selected:action.payload, size:state.size}
+            break;
         case "UPDATE_TAB":
 
             const currentTabToUpdate = [...state.tabs]
@@ -56,7 +61,7 @@ export function tabsReducers(state = {
 
             console.log("tab to update", newTabToUpdate);
 
-            return {tabs: [...currentTabToUpdate.slice(0, indexToUpdate), newTabToUpdate, ...currentTabToUpdate.slice(indexToUpdate + 1)]}
+            return {tabs: [...currentTabToUpdate.slice(0, indexToUpdate), newTabToUpdate, ...currentTabToUpdate.slice(indexToUpdate + 1)], selected:state.selected, size:state.size}
             break;
     }
     return state

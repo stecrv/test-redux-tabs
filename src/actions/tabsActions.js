@@ -19,6 +19,12 @@ export function deleteTabs(id){
         payload: id
     }
 }
+export function updateSelected(selected){
+    return {
+        type:"UPDATE_SELECTED",
+        payload: selected
+    }
+}
 // UPDATE A TAB
 export function updateTabs(tabs, tab){
     return {

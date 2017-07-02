@@ -6781,6 +6781,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.getTabs = getTabs;
 exports.postTabs = postTabs;
 exports.deleteTabs = deleteTabs;
+exports.updateSelected = updateSelected;
 exports.updateTabs = updateTabs;
 function getTabs() {
     return {
@@ -6799,6 +6800,12 @@ function deleteTabs(id) {
     return {
         type: "DELETE_TAB",
         payload: id
+    };
+}
+function updateSelected(selected) {
+    return {
+        type: "UPDATE_SELECTED",
+        payload: selected
     };
 }
 // UPDATE A TAB
@@ -24829,13 +24836,15 @@ function tabsReducers() {
             id: 4,
             name: 'Boba Fett',
             points: '872'
-        }]
+        }],
+        selected: 0,
+        size: 'wide'
     };
     var action = arguments[1];
 
     switch (action.type) {
         case "GET_TABS":
-            return _extends({}, state, { tabs: [].concat(_toConsumableArray(state.tabs)) });
+            return _extends({}, state, { tabs: [].concat(_toConsumableArray(state.tabs)), selected: state.selected, size: state.size });
             break;
         case "POST_TAB":
             var tabs = state.tabs.concat(action.payload);
@@ -24850,6 +24859,9 @@ function tabsReducers() {
 
             return { tabs: [].concat(_toConsumableArray(currentTabToDelete.slice(0, indexToDelete)), _toConsumableArray(currentTabToDelete.slice(indexToDelete + 1))) };
             break;
+        case "UPDATE_SELECTED":
+            return { tabs: state.tabs, selected: action.payload, size: state.size };
+            break;
         case "UPDATE_TAB":
 
             var currentTabToUpdate = [].concat(_toConsumableArray(state.tabs));
@@ -24862,7 +24874,7 @@ function tabsReducers() {
 
             console.log("tab to update", newTabToUpdate);
 
-            return { tabs: [].concat(_toConsumableArray(currentTabToUpdate.slice(0, indexToUpdate)), [newTabToUpdate], _toConsumableArray(currentTabToUpdate.slice(indexToUpdate + 1))) };
+            return { tabs: [].concat(_toConsumableArray(currentTabToUpdate.slice(0, indexToUpdate)), [newTabToUpdate], _toConsumableArray(currentTabToUpdate.slice(indexToUpdate + 1))), selected: state.selected, size: state.size };
             break;
     }
     return state;
@@ -24924,18 +24936,24 @@ var TabsLists = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            console.log('accessing to state', this.props.tabs);
-            var tabsSelector = this.props.tabs.map(function (tabsArr) {
-                return _react2.default.createElement(_tabSelector2.default, { key: tabsArr.id,
+            console.log('accessing to state', this.props);
+            var sel = this.props.selected;
+            var tabsSelector = this.props.tabs.map(function (tabsArr, index) {
+                return _react2.default.createElement(_tabSelector2.default, {
+                    key: tabsArr.id,
                     id: tabsArr.id,
-                    name: tabsArr.name
+                    name: tabsArr.name,
+                    pos: index,
+                    isSelected: index === sel
                 });
             });
-            var tabsList = this.props.tabs.map(function (tabsArr) {
+            var tabsList = this.props.tabs.map(function (tabsArr, index) {
                 return _react2.default.createElement(_tabItem2.default, { key: tabsArr.id,
                     id: tabsArr.id,
                     name: tabsArr.name,
-                    points: tabsArr.points
+                    points: tabsArr.points,
+                    pos: index,
+                    isSelected: index === sel
                 });
             });
             return _react2.default.createElement(
@@ -24964,7 +24982,9 @@ var TabsLists = function (_React$Component) {
 
 function mapStateToProps(state) {
     return {
-        tabs: state.tabs.tabs
+        tabs: state.tabs.tabs,
+        selected: state.tabs.selected
+
     };
 }
 function mapDispatchToProps(dispatch) {
@@ -25025,9 +25045,10 @@ var TabItem = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
+            var isSelected = this.props.isSelected ? 'active' : 'noactive';
             return _react2.default.createElement(
                 'div',
-                { className: 'item', key: this.props.id },
+                { className: 'item ' + isSelected, key: this.props.id },
                 _react2.default.createElement(
                     'span',
                     { className: 'name' },
@@ -25037,7 +25058,8 @@ var TabItem = function (_React$Component) {
                 _react2.default.createElement(
                     'span',
                     { className: 'points' },
-                    this.props.points
+                    this.props.points,
+                    ' points'
                 )
             );
         }
@@ -25048,7 +25070,8 @@ var TabItem = function (_React$Component) {
 
 function mapStateToProps(state) {
     return {
-        tabs: state.tabs.tabs
+        tabs: state.tabs.tabs,
+        selected: state.tabs.selected
     };
 }
 
@@ -25084,8 +25107,6 @@ var _tabsActions = __webpack_require__(56);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -25103,24 +25124,16 @@ var TabSelector = function (_React$Component) {
 
     _createClass(TabSelector, [{
         key: 'handleSelector',
-        value: function handleSelector() {
-
-            var tab = [].concat(_toConsumableArray(this.props.tabs), [{
-                id: this.props.id,
-                name: this.props.name
-            }]);
-
-            var id = this.props.tabs.findIndex(function (tab) {
-                return tab.id === id;
-            });
-            this.props.updateTabs(id, tab);
+        value: function handleSelector(pos) {
+            this.props.updateSelected(pos);
         }
     }, {
         key: 'render',
         value: function render() {
+            var isSelected = this.props.isSelected ? 'active' : 'noactive';
             return _react2.default.createElement(
                 'span',
-                { className: 'selector', key: this.props.id, onClick: this.handleSelector },
+                { className: 'selector ' + isSelected, key: this.props.id, onClick: this.handleSelector.bind(this, this.props.pos) },
                 _react2.default.createElement(
                     'span',
                     { className: 'name' },
@@ -25135,12 +25148,13 @@ var TabSelector = function (_React$Component) {
 
 function mapStateToProps(state) {
     return {
-        tabs: state.tabs.tabs
+        tabs: state.tabs.tabs,
+        selected: state.tabs.selected
     };
 }
 
 function mapDispatchToProps(dispatch) {
-    return (0, _redux.bindActionCreators)({ updateTabs: _tabsActions.updateTabs }, dispatch);
+    return (0, _redux.bindActionCreators)({ updateTabs: _tabsActions.updateTabs, updateSelected: _tabsActions.updateSelected }, dispatch);
 }
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(TabSelector);

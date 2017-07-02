@@ -5,6 +5,10 @@
 .hide{
     display: none
 }
+.points{
+    color: #b4b4b4;
+    margin: 3px 0;
+}
 
 @media screen and (max-width: 480px) {
     body {
@@ -17,11 +21,14 @@
     }
     #items{
         display:block;
+        margin: 0;
+        padding: 0;
     }
     .item{
         padding: 10px;
         margin: 0 10px 0 10px;
         border: 1px solid #efefef;
+        max-width: 400px;
     }
     .firstItem{
 
@@ -42,13 +49,15 @@
         padding: 10px 10px 0 10px;
         margin: 10px 0 0 0;
         border: 1px solid #efefef;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
     }
     #items{
         display:block;
         justify-content: center;
         align-items: center;
+        margin: 0;
+        padding: 0;
     }
     .item{
         align-self: center;
@@ -56,5 +65,18 @@
         margin: 0 10px 10px 0;
         border: 1px solid #efefef;
         border-radius: 5px;
+        max-width: 400px
+    }
+    .selector.active{
+        background-color: white;
+    }
+    .selector.noactive{
+        background-color: lightgray;
+    }
+    .item.active{
+
+    }
+    .item.noactive{
+        display: none;
     }
 }

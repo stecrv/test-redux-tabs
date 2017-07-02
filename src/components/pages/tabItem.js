@@ -14,10 +14,11 @@ class TabItem extends React.Component {
     }
 
     render() {
+        var isSelected = this.props.isSelected ? 'active':'noactive'
         return (
-            <div className="item" key={this.props.id}>
+            <div className={'item '+isSelected} key={this.props.id}>
                 <span className="name" ><input ref={'name_'+this.props.id} value={this.props.name}  onChange={this.handleTab.bind(this, {id: this.props.id, points: this.props.points}) }/></span><br/>
-                <span className="points">{this.props.points}</span>
+                <span className="points">{this.props.points} points</span>
             </div>
         )
     }
@@ -26,6 +27,7 @@ class TabItem extends React.Component {
 function mapStateToProps(state) {
     return {
         tabs: state.tabs.tabs,
+        selected: state.tabs.selected
     }
 }
 

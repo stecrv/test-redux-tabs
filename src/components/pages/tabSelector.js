@@ -2,28 +2,19 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {postTabs, updateTabs} from '../../actions/tabsActions'
+import {updateSelected, updateTabs} from '../../actions/tabsActions'
 
 
 class TabSelector extends React.Component {
 
-    handleSelector() {
-
-        const tab = [...this.props.tabs, {
-            id: this.props.id,
-            name: this.props.name,
-        }];
-
-        let id =  this.props.tabs.findIndex((function(tab){
-            return tab.id === id;
-        }));
-        this.props.updateTabs(id, tab);
-
+    handleSelector(pos) {
+        this.props.updateSelected(pos);
     }
 
     render() {
+        var isSelected = this.props.isSelected ? 'active':'noactive'
         return (
-            <span className="selector" key={this.props.id} onClick={this.handleSelector}>
+            <span className={'selector '+ isSelected} key={this.props.id} onClick={this.handleSelector.bind(this,this.props.pos)}>
                 <span className="name">{this.props.name}</span>
             </span>
         )
@@ -33,11 +24,12 @@ class TabSelector extends React.Component {
 function mapStateToProps(state) {
     return {
         tabs: state.tabs.tabs,
+        selected: state.tabs.selected
     }
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({updateTabs: updateTabs}, dispatch)
+    return bindActionCreators({updateTabs: updateTabs,updateSelected:updateSelected}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TabSelector)

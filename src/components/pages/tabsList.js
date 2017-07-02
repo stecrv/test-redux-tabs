@@ -12,24 +12,30 @@ class TabsLists extends React.Component{
         this.props.getTabs()
     }
     render(){
-        console.log('accessing to state', this.props.tabs)
+        console.log('accessing to state', this.props)
+        var sel = this.props.selected;
         const tabsSelector =
-            this.props.tabs.map(function(tabsArr){
+            this.props.tabs.map(function(tabsArr, index){
                 return(
-                    <TabSelector key={tabsArr.id}
+                    <TabSelector
+                             key={tabsArr.id}
                              id={tabsArr.id}
                              name={tabsArr.name}
+                             pos={index}
+                             isSelected={index===sel}
                     />
 
                 )
             });
         const tabsList =
-            this.props.tabs.map(function(tabsArr){
+            this.props.tabs.map(function(tabsArr, index){
                 return(
                         <TabItem key={tabsArr.id}
                             id={tabsArr.id}
                             name={tabsArr.name}
                             points={tabsArr.points}
+                            pos={index}
+                            isSelected={index===sel}
                         />
                 )
             });
@@ -49,7 +55,9 @@ class TabsLists extends React.Component{
 }
 function mapStateToProps(state){
     return{
-        tabs: state.tabs.tabs
+        tabs: state.tabs.tabs,
+        selected: state.tabs.selected,
+
     }
 }
 function mapDispatchToProps(dispatch){
